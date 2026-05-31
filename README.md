@@ -6,20 +6,7 @@
 
 ## ️ Arquitetura
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    MODERN DATA STACK LOCAL                          │
-│                                                                     │
-│  CSV Bruto          Bronze              Silver             Gold     │
-│  (Local)    ──►  (Raw Parquet)  ──►  (Cleaned +   ──►  (Fact        │
-│                   MinIO S3            LGPD Mask)        Table)      │
-│                                                                     │
-│   Engine: DuckDB + httpfs extension (SQL nativo para S3/MinIO)    │
-│   Storage: MinIO (AWS S3-compatible, via Docker)                  │
-│   Viz: Streamlit + Plotly                                         │
-│   Packages: UV + pyproject.toml                                   │
-└─────────────────────────────────────────────────────────────────────┘
-```
+![Pipeline](pipeline.png)
 
 ### Camadas Medallion
 
