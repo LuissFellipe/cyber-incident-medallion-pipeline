@@ -182,11 +182,3 @@ uv run ruff format .
 ```
 
 ---
-
-##  Licença
-
-MIT © 2024
-=======
-# cyber-incident-medallion-pipeline
-Pipeline de Engenharia de Dados desenvolvido para processamento em batch de eventos de cibersegurança.
->>>>>>> 59a3e232fc1199c72b292036ed9581ebdbdb3fc4
