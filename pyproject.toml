@@ -1,0 +1,55 @@
+[project]
+name = "cyber-pipeline"
+version = "1.0.0"
+description = "Pipeline de Engenharia de Dados para Logs de Ataques Cibernéticos com arquitetura Medallion (Bronze/Silver/Gold) usando DuckDB + MinIO."
+authors = [
+    { name = "Data Engineer", email = "eng@pipeline.local" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+
+dependencies = [
+    "duckdb>=0.10.0",
+    "streamlit>=1.35.0",
+    "pyarrow>=16.0.0",
+    "fsspec>=2024.3.1",
+    "s3fs>=2024.3.1",
+    "python-dotenv>=1.0.1",
+    "pandas>=2.2.2",
+    "plotly>=5.22.0",
+    "numpy>=2.4.6",
+    "statsmodels>=0.14.6",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.4.0",
+    "pytest>=8.2.0",
+    "ipykernel>=6.29.0",
+]
+
+# ---------------------------------------------------------------------------
+# Instrui o UV a NÃO tentar buildar este diretório como pacote instalável.
+# O projeto é composto de scripts avulsos (pipeline_etl.py, app_dashboard.py),
+# não de um pacote Python com __init__.py — portanto não há nada para buildar.
+# ---------------------------------------------------------------------------
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

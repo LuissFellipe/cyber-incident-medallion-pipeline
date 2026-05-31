@@ -1,0 +1,71 @@
+version: "3.9"
+
+# =============================================================================
+# Cybersecurity Data Pipeline - Modern Data Stack Local
+# Infraestrutura: MinIO (simulando AWS S3) com arquitetura Medallion
+# Buckets: bronze | silver | gold
+# =============================================================================
+
+services:
+
+  # ---------------------------------------------------------------------------
+  # MinIO: Object Storage compatível com S3
+  # Console Web: http://localhost:9001  (root / password123)
+  # API S3:      http://localhost:9000
+  # ---------------------------------------------------------------------------
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-01-16T16-07-38Z
+    container_name: minio_cyber
+    restart: unless-stopped
+    ports:
+      - "9000:9000"   # S3 API endpoint
+      - "9001:9001"   # MinIO Web Console
+    environment:
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: password123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      # Usa o binário 'mc' já embutido na imagem MinIO — não depende de curl.
+      # 'start_period' dá 20s de graça para o processo inicializar antes de
+      # começar a contar falhas, evitando o "unhealthy" prematuro.
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  # ---------------------------------------------------------------------------
+  # mc (MinIO Client): Cria automaticamente os buckets das camadas Medallion.
+  # Executa uma única vez após o MinIO estar saudável e então encerra.
+  # ---------------------------------------------------------------------------
+  minio_init:
+    image: quay.io/minio/mc:latest
+    container_name: minio_init_cyber
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+        echo '>>> Configurando alias para o MinIO local...';
+        mc alias set local http://minio:9000 root password123;
+
+        echo '>>> Criando buckets da arquitetura Medallion...';
+        mc mb --ignore-existing local/bronze;
+        mc mb --ignore-existing local/silver;
+        mc mb --ignore-existing local/gold;
+
+        echo '>>> Configurando politica de leitura anonima (download)...';
+        mc anonymous set download local/bronze;
+        mc anonymous set download local/silver;
+        mc anonymous set download local/gold;
+
+        echo '>>> Buckets prontos:';
+        mc ls local;
+      "
+    restart: "no"
+
+volumes:
+  minio_data:
+    driver: local
