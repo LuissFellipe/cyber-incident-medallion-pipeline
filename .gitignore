@@ -1,8 +1,3 @@
-# =============================================================================
-# .gitignore — Cybersecurity Data Pipeline
-# =============================================================================
-
-# Ambiente virtual e cache UV
 .venv/
 .uv/
 __pycache__/
@@ -10,38 +5,30 @@ __pycache__/
 *.pyo
 *.pyd
 
-# Variáveis de ambiente (NUNCA versionar credenciais!)
 .env
 
-# Dataset bruto (arquivo grande; distribuir separadamente)
 data/
 *.csv
 
-# Logs gerados pelo pipeline
 pipeline.log
 *.log
 
-# Arquivos temporários Python
 *.egg-info/
 dist/
 build/
 .eggs/
 
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
 
-# Pytest
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Jupyter
 .ipynb_checkpoints/
 *.ipynb
 
-# Ruff cache
 .ruff_cache/
