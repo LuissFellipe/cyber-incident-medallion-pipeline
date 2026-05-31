@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ️ CyberShield Analytics — Cybersecurity Data Pipeline
 
 > Pipeline de Engenharia de Dados para análise de Logs de Ataques Cibernéticos, construído com **Modern Data Stack Local** usando arquitetura **Medallion (Bronze → Silver → Gold)**.
@@ -185,3 +186,7 @@ uv run ruff format .
 ##  Licença
 
 MIT © 2024
+=======
+# cyber-incident-medallion-pipeline
+Pipeline de Engenharia de Dados desenvolvido para processamento em batch de eventos de cibersegurança.
+>>>>>>> 59a3e232fc1199c72b292036ed9581ebdbdb3fc4
