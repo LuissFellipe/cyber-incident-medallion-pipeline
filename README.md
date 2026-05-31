@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ️ CyberShield Analytics — Cybersecurity Data Pipeline
 
 > Pipeline de Engenharia de Dados para análise de Logs de Ataques Cibernéticos, construído com **Modern Data Stack Local** usando arquitetura **Medallion (Bronze → Silver → Gold)**.
